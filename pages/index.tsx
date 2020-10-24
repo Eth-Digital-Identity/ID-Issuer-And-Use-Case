@@ -16,6 +16,7 @@ import {
   injected
 } from '../connectors'
 import { Spinner } from '../components/Spinner'
+import { KYC } from '../components/KYC'
 
 enum ConnectorNames {
   Injected = 'Connect',
@@ -110,20 +111,26 @@ function Account() {
   //Need to take users eth address as input, check if they have ID and show thier name. 
   const [name, setName] = React.useState("name");
   tryToExport(setName);
-  
+  const { active, error } = useWeb3React()
   return (
     <>
-      <span>Account {name}</span>
-      <span role="img" aria-label="robot">
+    <div>
+      <p><span>Account: {name}</span>
+      <span style={{ margin: '1rem', textAlign: 'right' }}>{active ? '💰' : error ? '🔴' : ''}</span>
+      </p>
+      {/* <span role="img" aria-label="robot">
         🤖
-      </span>
+      </span> */}
+      <p>
       <span>
         {account === null
           ? '-'
           : account
-          ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
+          ? `Address: ${ account.substring(0, 6)}...${account.substring(account.length - 4)}`
           : ''}
       </span>
+      </p>
+      </div>
     </>
   )
 }
@@ -172,8 +179,8 @@ function Header() {
 
   return (
     <>
-      <h1 style={{ margin: '1rem', textAlign: 'right' }}>{active ? '🟢' : error ? '🔴' : '🟠'}</h1>
-      <h3
+      {/* <h1 style={{ margin: '1rem', textAlign: 'right' }}>{active ? '🟢' : error ? '🔴' : '🟠'}</h1> */}
+      {/* <h3
         style={{
           display: 'grid',
           gridGap: '1rem',
@@ -182,10 +189,10 @@ function Header() {
           lineHeight: '2rem',
           margin: 'auto'
         }}
-      >
-
+      > */}
+      
         <Account />
-      </h3>
+      {/* </h3> */}
     </>
   )
 }
@@ -210,16 +217,22 @@ function App() {
 
   return (
     <>
+    <div className="account-Wrapper">
+      <div>
+    <span className="left"> Universal KYC Issuer </span>
+    </div>
+    <div className="right">
       <Header />
-      <hr style={{ margin: '2rem' }} />
-      <div
-        style={{
-          display: 'grid',
-          gridGap: '1rem',
-          gridTemplateColumns: '1fr 1fr',
-          maxWidth: '20rem',
-          margin: 'auto'
-        }}
+      {/* <hr style={{ margin: '2rem' }} /> */}
+      <div  
+      className="btn-container"
+        // style={{
+        //   display: 'grid',
+        //   gridGap: '1rem',
+        //   gridTemplateColumns: '1fr 1fr',
+        //   maxWidth: '20rem',
+        //   margin: 'auto'
+        // }}
       >
         {Object.keys(connectorsByName).map(name => {
           const currentConnector = connectorsByName[name]
@@ -228,14 +241,16 @@ function App() {
           const disabled = !triedEager || !!activatingConnector || connected || !!error
 
           return (
+            <div> 
             <button
-              style={{
-                height: '3rem',
-                borderRadius: '1rem',
-                borderColor: activating ? 'orange' : connected ? 'green' : 'unset',
-                cursor: disabled ? 'unset' : 'pointer',
-                position: 'relative'
-              }}
+              // style={{
+              //   height: '3rem',
+              //   borderRadius: '1rem',
+              //   borderColor: activating ? 'orange' : connected ? 'green' : 'unset',
+              //   cursor: disabled ? 'unset' : 'pointer',
+              //   position: 'relative'
+              // }}
+              className="SubmitButton"
               disabled={disabled}
               key={name}
               onClick={() => {
@@ -264,19 +279,23 @@ function App() {
               </div>
               {name}
             </button>
+            </div>
             
           )
         })}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div
+        // style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        >
         {(active || error) && (
           <button
-            style={{
-              height: '3rem',
-              marginTop: '0rem',
-              borderRadius: '1rem',
-              borderColor: 'red',
-              cursor: 'pointer'
-            }}
+          className="ResetButton"
+            // style={{
+            //   height: '3rem',
+            //   marginTop: '0rem',
+            //   borderRadius: '1rem',
+            //   borderColor: 'red',
+            //   cursor: 'pointer'
+            // }}
             onClick={() => {
               deactivate()
             }}
@@ -291,8 +310,9 @@ function App() {
 
       </div>
       
-      <hr style={{ margin: '2rem' }} />
-
+      {/* <hr style={{ margin: '2rem' }} /> */}
+      </div>
+      </div>
       <div
         style={{
           display: 'grid',
@@ -303,12 +323,18 @@ function App() {
         }}
       >
         {!!(library && account) && (
+          <>
+          <KYC/>
+          <div 
+          className="btn-container"
+          >
           <button
-            style={{
-              height: '3rem',
-              borderRadius: '1rem',
-              cursor: 'pointer'
-            }}
+          className="SubmitButton"
+            // style={{
+            //   height: '3rem',
+            //   borderRadius: '1rem',
+            //   cursor: 'pointer'
+            // }}
             onClick={() => {
               library
                 .getSigner(account)
@@ -323,8 +349,11 @@ function App() {
           >
             Sign Message
           </button>
+          </div>
+          </>
         )}
         
+     
       </div>
     </>
   )

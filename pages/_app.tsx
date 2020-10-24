@@ -2,6 +2,7 @@ import App from 'next/app'
 import Head from 'next/head'
 
 import '../styles.css'
+import { KYC } from '../components/KYC'
 
 export default class Root extends App {
   render() {
@@ -10,10 +11,22 @@ export default class Root extends App {
     return (
       <>
         <Head>
-          <title>web3-react example</title>
+          <title>KYC Issuer</title>
         </Head>
+        {/* <div className="citiGradient">
+          <span>Universal KYC Issuer</span>
+
+        </div> */}
+       
 
         <Component />
+        <div className="footer">
+        <p><span>Developed By: </span>
+        Sajida & team
+        </p>
+        </div>
+
+        
       </>
     )
   }
