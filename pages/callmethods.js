@@ -1,8 +1,4 @@
 const { ethers, Wallet } = require("ethers");
-//const fs = require("fs");
-//var rawdata = fs.readFileSync('secrets.json');
-//var secrets = JSON.parse(rawdata);
-//var path = require('path');
 import { text } from "./artifacts/DigitalIdIssuer.js";
 
 function unpackArtifact(artifactPath){
@@ -17,15 +13,6 @@ function unpackArtifact(artifactPath){
     if(constructorArgs.length < 1) {
         constructorStr = "    -- No constructor arguments -- ";
     }
-/*     else {
-        constructorJSON = constructorArgs[0].inputs;
-        constructorStr = JSON.stringify(constructorJSON.map((c) => {
-            return {
-                name: c.name,
-                type: c.type
-            };
-        }));
-    } */
     return {
         abi: contractABI,
         bytecode: contractBytecode,
@@ -59,25 +46,13 @@ async function issueId(digitalIdIssuer, setName){
     const digitalIdIssuerContract = new ethers.Contract(contractAddress, tokenUnpacked.abi, signer); //Get instance of DigitalIdIssuer contract
     digitalIdIssuerContract.name().then(console.log); //Get name of contract
     //var verifiedPersonIdNumber = digitalIdIssuerContract.issueId(myAddress, "Philip Rego", "JSONMetadataURI", overrides).then(console.log).catch(console.log); //Call contract to send DigitalIdIssuer to my address
-    var result = await digitalIdIssuerContract.getVerifiedName(5);
+    var result =  await digitalIdIssuerContract.getVerifiedName(5);
     console.log("result:"+result);
     setName(result);
     return result;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//TODO Figure out how to put in another file
 const digitalIdIssuerJson = {
     "contractName": "DigitalIdIssuer",
     "abi": [
@@ -541,6 +516,6 @@ const digitalIdIssuerJson = {
   };
 
 
-export async function tryToExport(setName){
-    return await issueId(digitalIdIssuerJson, setName);
+export function tryToExport(setName){
+    return issueId(digitalIdIssuerJson, setName);
 }
