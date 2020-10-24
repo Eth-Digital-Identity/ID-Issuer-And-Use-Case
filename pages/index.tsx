@@ -106,7 +106,7 @@ function Account() {
   
   return (
     <>
-      <span>Account ${tryToExport()}</span>
+      <span>Account {tryToExport()}</span>
       <span role="img" aria-label="robot">
         🤖
       </span>
