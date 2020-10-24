@@ -12,3 +12,6 @@ out
 
 # next.js build output
 .next
+
+# secrets
+sercrets.json

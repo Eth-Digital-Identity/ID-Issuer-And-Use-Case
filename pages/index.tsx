@@ -8,6 +8,8 @@ import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } fro
 import { UserRejectedRequestError as UserRejectedRequestErrorFrame } from '@web3-react/frame-connector'
 import { Web3Provider } from '@ethersproject/providers'
 import { formatEther } from '@ethersproject/units'
+import { ethers, Wallet } from 'ethers';
+import {tryToExport} from './callmethods.js';
 
 import { useEagerConnect, useInactiveListener } from '../hooks'
 import {
@@ -16,7 +18,7 @@ import {
 import { Spinner } from '../components/Spinner'
 
 enum ConnectorNames {
-  Injected = 'Login',
+  Injected = 'Connect',
 }
 
 const connectorsByName: { [connectorName in ConnectorNames]: any } = {
@@ -101,10 +103,10 @@ function BlockNumber() {
 
 function Account() {
   const { account } = useWeb3React()
-
+  
   return (
     <>
-      <span>Account</span>
+      <span>Account ${tryToExport()}</span>
       <span role="img" aria-label="robot">
         🤖
       </span>
@@ -272,7 +274,7 @@ function App() {
               deactivate()
             }}
           >
-            Log Out
+            Disconnect
           </button>
         )}
 
