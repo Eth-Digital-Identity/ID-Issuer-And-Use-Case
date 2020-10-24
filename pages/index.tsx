@@ -101,12 +101,19 @@ function BlockNumber() {
   )
 }
 
+
 function Account() {
   const { account } = useWeb3React()
   
+  //Read ID and show name
+  //Hardcoded address of my ID (Philip Rego). 
+  //Need to take users eth address as input, check if they have ID and show thier name. 
+  const [name, setName] = React.useState("name");
+  tryToExport(setName);
+  
   return (
     <>
-      <span>Account {tryToExport()}</span>
+      <span>Account {name}</span>
       <span role="img" aria-label="robot">
         🤖
       </span>

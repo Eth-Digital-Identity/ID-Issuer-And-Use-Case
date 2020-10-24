@@ -49,7 +49,7 @@ let overrides = {
 
 var signer = connectWallet("ropsten"); //Connect to ropsten testnet
 
-function issueId(digitalIdIssuer){
+async function issueId(digitalIdIssuer, setName){
     console.log("dirname:");
     console.log(__dirname);
     let tokenUnpacked = unpackArtifact(digitalIdIssuer); //Unpack DigitalIdIssuer contract details. create with 'npx buidler compile'
@@ -59,7 +59,10 @@ function issueId(digitalIdIssuer){
     const digitalIdIssuerContract = new ethers.Contract(contractAddress, tokenUnpacked.abi, signer); //Get instance of DigitalIdIssuer contract
     digitalIdIssuerContract.name().then(console.log); //Get name of contract
     //var verifiedPersonIdNumber = digitalIdIssuerContract.issueId(myAddress, "Philip Rego", "JSONMetadataURI", overrides).then(console.log).catch(console.log); //Call contract to send DigitalIdIssuer to my address
-    digitalIdIssuerContract.getVerifiedName(5).then(console.log).catch(console.log);
+    var result = await digitalIdIssuerContract.getVerifiedName(5);
+    console.log("result:"+result);
+    setName(result);
+    return result;
 }
 
 
@@ -538,6 +541,6 @@ const digitalIdIssuerJson = {
   };
 
 
-export function tryToExport(){
-    return issueId(digitalIdIssuerJson);
+export async function tryToExport(setName){
+    return await issueId(digitalIdIssuerJson, setName);
 }
