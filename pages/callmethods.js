@@ -75,7 +75,8 @@ export async function getIdNumber(account, setName, setIdNumber){
         digitalIdIssuerContract.tokenOfOwnerByIndex(account, 0).then((idNumber) => {
           digitalIdIssuerContract.getVerifiedName(idNumber).then((name) => {
             setName(name);
-            setIdNumber(idNumber);
+            var idNumberDecimal = parseInt(idNumber._hex,16);
+            setIdNumber(idNumberDecimal);
           });
         });
       } else{

@@ -107,22 +107,21 @@ function Account() {
   const { account } = useWeb3React()
   console.log("account: "+account);
 
-  //Read ID and show name
-  //Hardcoded address of my ID (Philip Rego). 
-  //Need to take users eth address as input, check if they have ID and show thier name. 
-  const [name, setName] = React.useState("name");
-  const [idNumber, setIdNumber] = React.useState("idNumber");
+  const [name, setName] = React.useState();
+  const [idNumber, setIdNumber] = React.useState();
 
-  //readId(setName);
-  if(account != null){
+  if(account != null && name == null){
     getIdNumber(account,setName,setIdNumber);
   }
-  //
+  
   const { active, error } = useWeb3React()
   return (
     <>
     <div>
       <p><span>Account: {name}</span>
+      <span style={{ margin: '1rem', textAlign: 'right' }}>{active ? '💰' : error ? '🔴' : ''}</span>
+      </p>
+      <p><span>ID Number: {idNumber}</span>
       <span style={{ margin: '1rem', textAlign: 'right' }}>{active ? '💰' : error ? '🔴' : ''}</span>
       </p>
       {/* <span role="img" aria-label="robot">
