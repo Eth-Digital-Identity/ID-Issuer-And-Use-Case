@@ -9,7 +9,7 @@ import { UserRejectedRequestError as UserRejectedRequestErrorFrame } from '@web3
 import { Web3Provider } from '@ethersproject/providers'
 import { formatEther } from '@ethersproject/units'
 import { ethers, Wallet } from 'ethers';
-import {tryToExport} from './callmethods.js';
+import {readId, issueId, getIdNumber} from './callmethods.js';
 
 import { useEagerConnect, useInactiveListener } from '../hooks'
 import {
@@ -105,12 +105,19 @@ function BlockNumber() {
 
 function Account() {
   const { account } = useWeb3React()
-  
+  console.log("account: "+account);
+
   //Read ID and show name
   //Hardcoded address of my ID (Philip Rego). 
   //Need to take users eth address as input, check if they have ID and show thier name. 
   const [name, setName] = React.useState("name");
-  tryToExport(setName);
+  const [idNumber, setIdNumber] = React.useState("idNumber");
+
+  //readId(setName);
+  if(account != null){
+    getIdNumber(account,setName,setIdNumber);
+  }
+  //
   const { active, error } = useWeb3React()
   return (
     <>
@@ -336,11 +343,16 @@ function App() {
             //   cursor: 'pointer'
             // }}
             onClick={() => {
+              console.log('Issuing ID for.. Name: ' + fname + ' ' + lname  + ' Account: '+account);
+              var fname = document.getElementById('fname').value;
+              var lname = document.getElementById('lname').value;
+              
               library
                 .getSigner(account)
-                .signMessage('👋')
+                .signMessage('Apply for Digital ID. If your information is valid a Digital ID will be sent to your account.')
                 .then((signature: any) => {
-                  window.alert(`Success!\n\n${signature}`)
+                  issueId(account, fname + ' ' + lname);
+                  window.alert(`Application recieved. If approved an ID will be sent to your account shortly. \n\nSignature:\n${signature}`)
                 })
                 .catch((error: any) => {
                   window.alert('Failure!' + (error && error.message ? `\n\n${error.message}` : ''))

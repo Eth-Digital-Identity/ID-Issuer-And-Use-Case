@@ -1,4 +1,4 @@
-const digitalIdIssuerJson = {
+export const  digitalIdIssuerJson = {
   "contractName": "DigitalIdIssuer",
   "abi": [
     {
