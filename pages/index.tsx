@@ -119,10 +119,10 @@ function Account() {
     <>
     <div>
       <p><span>Account: {name}</span>
-      <span style={{ margin: '1rem', textAlign: 'right' }}>{active ? '💰' : error ? '🔴' : ''}</span>
+      <span style={{ margin: '1rem', textAlign: 'right' }}>{active ? '' : error ? '🔴' : ''}</span>
       </p>
       <p><span>ID Number: {idNumber}</span>
-      <span style={{ margin: '1rem', textAlign: 'right' }}>{active ? '💰' : error ? '🔴' : ''}</span>
+      <span style={{ margin: '1rem', textAlign: 'right' }}>{active ? '' : error ? '🔴' : ''}</span>
       </p>
       {/* <span role="img" aria-label="robot">
         🤖
@@ -277,11 +277,7 @@ function App() {
                 }}
               >
                 {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
-                {connected && (
-                  <span role="img" aria-label="check">
-                    ✅
-                  </span>
-                )}
+                {connected}
               </div>
               {name}
             </button>

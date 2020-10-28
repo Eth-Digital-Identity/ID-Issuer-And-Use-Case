@@ -1,5 +1,5 @@
 const { ethers, Wallet } = require("ethers");
-import { digitalIdIssuerJson } from "./artifacts/DigitalIdIssuer.js";
+import { digitalIdIssuerJson } from "./artifacts/DigitalIdIssuer2.js";
 
 //Very insecure. Should only be kept on server. Just using for testing now
 const mnemonic = "hen copper robot core disagree " +"casual rigid jeans census hidden come dawn";
@@ -49,7 +49,7 @@ var signer = connectWallet("ropsten"); //Connect to ropsten testnet
 export async function readId(setName){
     let tokenUnpacked = unpackArtifact(digitalIdIssuerJson); //Unpack DigitalIdIssuer contract details. create with 'npx buidler compile'
     //console.log(tokenUnpacked.abi);
-    var contractAddress = "0xC5a94B4DB4A87a6713a97cBE3C828704918bCa6c"; //Deployed address to request DigitalIdIssuer
+    var contractAddress = "0x067Ba43D9B8050a7d96936Dc8d0fbFB2427C379D"; //Deployed address to request DigitalIdIssuer
     var myAddress = "0x66D56D0B0Bc2Ff5e9d553D83B9f91227CF46aAd0"; //User address
     const digitalIdIssuerContract = new ethers.Contract(contractAddress, tokenUnpacked.abi, signer); //Get instance of DigitalIdIssuer contract
     digitalIdIssuerContract.name().then(console.log); //Get name of contract
@@ -67,7 +67,7 @@ export async function readId(setName){
 export async function getIdNumber(account, setName, setIdNumber){
   console.log("account"+account);
   let tokenUnpacked = unpackArtifact(digitalIdIssuerJson); //Unpack DigitalIdIssuer contract details.
-  var contractAddress = "0xC5a94B4DB4A87a6713a97cBE3C828704918bCa6c"; //Deployed address to request DigitalIdIssuer
+  var contractAddress = "0x067Ba43D9B8050a7d96936Dc8d0fbFB2427C379D"; //Deployed address to request DigitalIdIssuer
   const digitalIdIssuerContract = new ethers.Contract(contractAddress, tokenUnpacked.abi, signer); //Get instance of DigitalIdIssuer contract
 
     digitalIdIssuerContract.balanceOf(account).then((balance) => {
@@ -87,7 +87,7 @@ export async function getIdNumber(account, setName, setIdNumber){
 
 export function issueId(account, name){
   let tokenUnpacked = unpackArtifact(digitalIdIssuerJson); //Unpack DigitalIdIssuer contract details.
-  var contractAddress = "0xC5a94B4DB4A87a6713a97cBE3C828704918bCa6c"; //Deployed address to request DigitalIdIssuer
+  var contractAddress = "0x067Ba43D9B8050a7d96936Dc8d0fbFB2427C379D"; //Deployed address to request DigitalIdIssuer
   const digitalIdIssuerContract = new ethers.Contract(contractAddress, tokenUnpacked.abi, signer); //Get instance of DigitalIdIssuer contract
   var verifiedPersonIdNumber = digitalIdIssuerContract.issueId(account, name, "JSONMetadataURI", overrides).then(console.log).catch(console.log); //Call contract to send DigitalIdIssuer to my address
 }
