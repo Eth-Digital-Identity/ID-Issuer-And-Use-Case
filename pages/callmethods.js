@@ -41,7 +41,7 @@ function connectWallet(network){
 }
 
 let overrides = {
-    gasLimit: 800000
+    gasLimit: 500000
 };
 
 var signer = connectWallet("ropsten"); //Connect to ropsten testnet
